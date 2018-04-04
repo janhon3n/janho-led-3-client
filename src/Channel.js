@@ -23,11 +23,11 @@ class Channel extends Component {
 
     this.state = {
       mode: 1,
-      activeProgram: {
+      activePhase: {
         type: 'hold',
         color: { r: 255, g: 0, b: 0 },
       },
-      programList: [
+      program: [
         {
           type: 'hold',
           color: { r: 255, g: 0, b: 0 },
@@ -48,19 +48,19 @@ class Channel extends Component {
 
   holdColor = color => {
     this.setState({
-      activeProgram: {
+      activePhase: {
         type: 'hold',
         color: color,
       },
     })
   }
 
-  editProgramList = newList => {
-    this.setState({ programList: newList })
+  editProgram = newList => {
+    this.setState({ program: newList })
   }
 
   render() {
-    let colorRgb = Color(this.state.activeProgram.color).hex()
+    let colorRgb = Color(this.state.activePhase.color).hex()
     return (
       <Paper
         className={this.props.classes.Channel}
@@ -77,15 +77,12 @@ class Channel extends Component {
         </Tabs>
         {this.state.mode === 0 && (
           <Manual
-            color={this.state.activeProgram.color}
+            color={this.state.activePhase.color}
             setColor={this.holdColor}
           />
         )}
         {this.state.mode === 1 && (
-          <Program
-            programList={this.state.programList}
-            onEdit={this.editProgramList}
-          />
+          <Program program={this.state.program} onEdit={this.editProgram} />
         )}
       </Paper>
     )

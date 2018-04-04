@@ -22,14 +22,14 @@ class HoldEdit extends Component {
     this.props.onEdit({
       type: 'hold',
       color: color,
-      duration: this.props.program.duration,
+      duration: this.props.phase.duration,
     })
   }
 
   setDuration = event => {
     this.props.onEdit({
       type: 'hold',
-      color: this.props.program.color,
+      color: this.props.phase.color,
       duration: event.target.value,
     })
   }
@@ -39,14 +39,14 @@ class HoldEdit extends Component {
       <div className={this.props.classes.HoldEdit}>
         <ColorPicker
           width={320}
-          color={this.props.program.color}
+          color={this.props.phase.color}
           onChange={this.setColor}
         />
         <TextField
           className={this.props.classes.Duration}
           label="Duration"
           type="number"
-          value={this.props.program.duration}
+          value={this.props.phase.duration}
           onChange={this.setDuration}
         />
       </div>

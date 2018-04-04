@@ -2,48 +2,47 @@ import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 import { withStyles } from 'material-ui/styles'
 import ColorPicker from './ColorPicker'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
 import * as Color from 'color'
 
 const styles = theme => ({
   HoldItem: {
     margin: '5px',
     padding: '5px',
+    paddingLeft: '15px',
     boxShadow: '1px 1px 5px #AAA',
     width: '100%',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light,
     cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 })
 
 class HoldItem extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      editableProgramIndex: 0,
-    }
-  }
-
   render() {
-    let color = Color(this.props.program.color).hex()
+    let color = Color(this.props.phase.color).hex()
     let style = {
       borderLeft: '10px solid ' + color,
     }
-    if (this.props.inEdit) {
-      style.boxShadow = '1px 1px 5px black'
-    }
     return (
-      <div
-        className={this.props.classes.HoldItem}
-        style={style}
-        onClick={() => {
-          this.props.selectItem()
-        }}
-      >
-        {this.props.program.type.toUpperCase() +
-          ' for ' +
-          this.props.program.duration +
-          ' cycles'}
+      <div className={this.props.classes.HoldItem} style={style}>
+        <Typography variant="body1" color="inherit">
+          {this.props.phase.type.toUpperCase() +
+            ' for ' +
+            this.props.phase.duration +
+            ' cycles'}
+        </Typography>
+        <Button
+          variant={this.props.isEditable ? 'raised' : 'default'}
+          color={this.props.isEditable ? 'secondary' : 'default'}
+          onClick={this.props.selectForEdit}
+        >
+          Edit
+        </Button>
+        <Button onClick={this.props.remove}>Remove</Button>
       </div>
     )
   }

@@ -28,7 +28,6 @@ class ColorPicker extends Component {
   }
 
   setRed = value => {
-    console.log(value)
     let color = Object.assign({}, this.props.color, { r: value })
     this.props.onChange(color)
   }
@@ -47,9 +46,7 @@ class ColorPicker extends Component {
   }
 
   render() {
-    console.log(this.props.color)
     let color = Color(this.props.color)
-    console.log(color.hsl())
     let hue = color.hsl().hue()
     let alpha = color.hsl().saturationl()
     return (
