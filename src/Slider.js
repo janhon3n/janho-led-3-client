@@ -5,15 +5,13 @@ import { withStyles } from 'material-ui/styles'
 const styles = theme => ({
   base: {
     position: 'relative',
-    width: '415px',
-    margin: '5px',
-    boxShadow: '0px 0px 5px #CCC',
+    margin: '0px',
   },
   tracker: {
     height: '30px',
-    width: '15px',
-    backgroundColor: '#444',
-    borderRadius: '12px',
+    width: '10px',
+    backgroundColor: '#EEE',
+    borderRadius: '2px',
     cursor: 'pointer',
   },
 })
@@ -24,20 +22,40 @@ class Slider extends Component {
     this.baseRef = React.createRef()
   }
 
+  handleDrag = (event, tracker) => {
+    let value = tracker.x / (this.props.width - 10) * this.props.max
+    this.props.onChange(value)
+  }
+
   render() {
-    let trackerPosition = this.props.value * 400
+    let trackerPosition =
+      this.props.value / this.props.max * (this.props.width - 10)
     return (
-      <div className={this.props.classes.base} ref={this.baseRef}>
+      <div
+        className={this.props.classes.base}
+        ref={this.baseRef}
+        style={{
+          backgroundColor: this.props.backgroundColor,
+          background: this.props.background,
+          width: this.props.width,
+        }}
+      >
         <Draggable
           axis="x"
           bounds="parent"
           position={{ x: trackerPosition, y: 0 }}
+          onDrag={this.handleDrag}
         >
           <div className={this.props.classes.tracker} />
         </Draggable>
       </div>
     )
   }
+}
+
+Slider.defaultProps = {
+  width: 435,
+  height: 130,
 }
 
 export default withStyles(styles)(Slider)
