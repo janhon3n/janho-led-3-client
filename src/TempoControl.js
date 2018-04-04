@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Slider from './Slider'
+import moment from 'moment'
 
 const styles = theme => ({
   Container: {
@@ -28,6 +29,34 @@ const styles = theme => ({
 })
 
 class TempoControl extends Component {
+  maxTapTime = 2000
+  maxTempo = 400
+  minTempo = 1
+
+  constructor(props) {
+    super(props)
+
+    this.lastClick = moment().subtract(1, 'days')
+  }
+
+  tapClick = () => {
+    let timeNow = moment()
+    if (
+      timeNow.isBefore(
+        moment(this.lastClick).add(this.maxTapTime, 'milliseconds')
+      )
+    ) {
+      let timeSpan = timeNow.diff(this.lastClick)
+      this.setTempo(60000 * 1 / timeSpan)
+    }
+    this.lastClick = timeNow
+  }
+
+  setTempo = tempo => {
+    if (tempo >= this.minTempo && tempo <= this.maxTempo)
+      this.props.onChange(tempo)
+  }
+
   render() {
     return (
       <div className={this.props.classes.Container}>
@@ -41,15 +70,15 @@ class TempoControl extends Component {
               width={200}
               value={this.props.tempo}
               max={400}
-              onChange={this.props.onChange}
+              onChange={this.setTempo}
               background="rgba(0,0,0,0.1)"
             />
             <TextField
               className={this.props.classes.TextField}
-              value={this.props.tempo}
-              onChange={e => this.props.onChange(e.target.value)}
+              value={Math.round(this.props.tempo)}
+              onChange={e => this.setTempo(e.target.value)}
             />
-            <Button variant="raised" color="secondary">
+            <Button variant="raised" color="secondary" onClick={this.tapClick}>
               Tap
             </Button>
           </div>

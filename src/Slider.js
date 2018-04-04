@@ -6,6 +6,7 @@ const styles = theme => ({
   base: {
     position: 'relative',
     margin: '0px',
+    height: '30px',
   },
   tracker: {
     height: '30px',
