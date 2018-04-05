@@ -21,7 +21,7 @@ const theme = createMuiTheme({
       dark: primaryColor[700],
     },
     secondary: {
-      light: secondaryColor[300],
+      light: secondaryColor[200],
       main: secondaryColor[500],
       dark: secondaryColor[700],
     },
@@ -51,7 +51,7 @@ class App extends Component {
     this.state = {
       tempo: 100,
       ticker: 0,
-      channelCount: 4,
+      openChannels: [0, 1, 2, 3],
     }
   }
 
@@ -87,10 +87,10 @@ class App extends Component {
             </Toolbar>
           </AppBar>
           <Grid container>
-            {[...Array(this.state.channelCount)].map((e, i) => {
+            {this.state.openChannels.map((channelNumber, i) => {
               return (
-                <Grid item xs={12} lg={6}>
-                  <Channel />
+                <Grid item xs={12} xl={6}>
+                  <Channel channelNumber={channelNumber} />
                 </Grid>
               )
             })}

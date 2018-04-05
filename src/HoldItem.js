@@ -11,8 +11,8 @@ const styles = theme => ({
     margin: '5px',
     padding: '5px',
     paddingLeft: '15px',
+    borderRadius: '5px',
     boxShadow: '1px 1px 5px #AAA',
-    width: '100%',
     backgroundColor: theme.palette.primary.light,
     cursor: 'pointer',
     display: 'flex',
@@ -26,6 +26,9 @@ class HoldItem extends Component {
     let color = Color(this.props.phase.color).hex()
     let style = {
       borderLeft: '10px solid ' + color,
+    }
+    if (this.props.isActive) {
+      style.boxShadow = '1px 1px 5px ' + color
     }
     return (
       <div className={this.props.classes.HoldItem} style={style}>

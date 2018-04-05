@@ -5,12 +5,35 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Manual from './Manual'
 import Program from './Program'
 import { withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 import io from 'socket.io-client'
 
 const styles = theme => ({
+  Container: {
+    display: 'flex',
+    margin: '30px',
+    maxWidth: '1200px',
+  },
+  Title: {
+    boxShadow: '-5px -5px 5px black',
+    display: 'flex',
+    justifyContent: 'center',
+    writingMode: 'vertical-rl',
+    transform: 'rotate(-180deg)',
+    padding: '15px 5px 15px 5px',
+    margin: '5px',
+    marginRight: '0px',
+    zIndex: -1,
+  },
   Channel: {
+    boxShadow: '5px 5px 5px black',
     overflow: 'hidden',
-    margin: '20px',
+    borderRadius: '5px',
+    flexGrow: 1,
+  },
+  ToolBar: {
+    margin: '0px',
+    padding: '0px',
   },
   Tabs: {
     backgroundColor: theme.palette.primary.main,
@@ -22,21 +45,18 @@ class Channel extends Component {
     super(props)
 
     this.state = {
+      title: 'Channel ' + props.channelNumber,
       mode: 1,
       activePhase: {
         type: 'hold',
         color: { r: 255, g: 0, b: 0 },
       },
+      programPhaseIndex: 0,
       program: [
         {
           type: 'hold',
           color: { r: 255, g: 0, b: 0 },
           duration: 2,
-        },
-        {
-          type: 'hold',
-          color: { r: 255, g: 0, b: 0 },
-          duration: 1,
         },
       ],
     }
@@ -59,32 +79,49 @@ class Channel extends Component {
     this.setState({ program: newList })
   }
 
+  setTitle = e => {
+    this.setState({ title: e.target.value })
+  }
   render() {
-    let colorRgb = Color(this.state.activePhase.color).hex()
+    let c = Color(this.state.activePhase.color)
+    let color = c.hex()
     return (
-      <Paper
-        className={this.props.classes.Channel}
-        style={{ borderLeft: '10px solid ' + colorRgb }}
-      >
-        <Tabs
-          className={this.props.classes.Tabs}
-          value={this.state.mode}
-          onChange={this.changeMode}
+      <div className={this.props.classes.Container}>
+        <Typography
+          variant="title"
+          style={{
+            backgroundColor: color,
+            color: c.isDark() ? 'white' : 'black',
+          }}
+          className={this.props.classes.Title}
         >
-          <Tab label="Manual color" />
-          <Tab label="Program" />
-          <Tab label="Off" />
-        </Tabs>
-        {this.state.mode === 0 && (
-          <Manual
-            color={this.state.activePhase.color}
-            setColor={this.holdColor}
-          />
-        )}
-        {this.state.mode === 1 && (
-          <Program program={this.state.program} onEdit={this.editProgram} />
-        )}
-      </Paper>
+          {this.state.title}
+        </Typography>
+        <Paper className={this.props.classes.Channel}>
+          <Tabs
+            className={this.props.classes.Tabs}
+            value={this.state.mode}
+            onChange={this.changeMode}
+          >
+            <Tab label="Manual color" />
+            <Tab label="Program" />
+            <Tab label="Off" />
+          </Tabs>
+          {this.state.mode === 0 && (
+            <Manual
+              color={this.state.activePhase.color}
+              setColor={this.holdColor}
+            />
+          )}
+          {this.state.mode === 1 && (
+            <Program
+              program={this.state.program}
+              phaseIndex={this.state.programPhaseIndex}
+              onEdit={this.editProgram}
+            />
+          )}
+        </Paper>
+      </div>
     )
   }
 }

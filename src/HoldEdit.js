@@ -8,6 +8,8 @@ const styles = theme => ({
   HoldEdit: {
     display: 'flex',
     justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    alignContent: 'flex-start',
     flexWrap: 'wrap',
     flexGrow: 1,
   },

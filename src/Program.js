@@ -21,6 +21,11 @@ class Program extends Component {
     }
   }
 
+  addPhase = phase => {
+    let phases = this.props.program.slice()
+    phases.push(phase)
+    this.props.onEdit(phases)
+  }
   editPhase = editedPhase => {
     let program = this.props.program.slice()
     program[this.state.editablePhaseIndex] = editedPhase
@@ -33,7 +38,7 @@ class Program extends Component {
 
   removePhase = index => {
     let newProgram = this.props.program.slice()
-    newProgram = newProgram.splice(index, 1)
+    newProgram.splice(index, 1)
     this.selectEditable(null)
     this.props.onEdit(newProgram)
   }
@@ -53,7 +58,9 @@ class Program extends Component {
           onOrderChange={this.changePhaseOrder}
           onSelect={this.selectEditable}
           onRemove={this.removePhase}
+          onAdd={this.addPhase}
           editableIndex={this.state.editablePhaseIndex}
+          phaseIndex={this.props.phaseIndex}
         />
         {editablePhase !== null &&
           editablePhase.type === 'hold' && (
