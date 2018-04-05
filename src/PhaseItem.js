@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography'
 import * as Color from 'color'
 
 const styles = theme => ({
-  HoldItem: {
+  PhaseItem: {
     margin: '5px',
     padding: '5px',
     paddingLeft: '15px',
@@ -21,17 +21,20 @@ const styles = theme => ({
   },
 })
 
-class HoldItem extends Component {
+class PhaseItem extends Component {
   render() {
-    let color = Color(this.props.phase.color).hex()
+    let color = Color(this.props.phase.color)
     let style = {
-      borderLeft: '10px solid ' + color,
+      borderLeft: '10px solid ' + color.hex(),
     }
+    if (this.props.phase.type === 'fade')
+      style.borderRight = '10px solid ' + Color(this.props.phase.endColor).hex()
+    if (this.props.isActive) style.backgroundColor = 'white'
     if (this.props.isActive) {
-      style.boxShadow = '1px 1px 5px ' + color
+      style.boxShadow = '1px 1px 5px ' + color.hex()
     }
     return (
-      <div className={this.props.classes.HoldItem} style={style}>
+      <div className={this.props.classes.PhaseItem} style={style}>
         <Typography variant="body1" color="inherit">
           {this.props.phase.type.toUpperCase() +
             ' for ' +
@@ -51,4 +54,4 @@ class HoldItem extends Component {
   }
 }
 
-export default withStyles(styles)(HoldItem)
+export default withStyles(styles)(PhaseItem)

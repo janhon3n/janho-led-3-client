@@ -5,7 +5,7 @@ import {
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc'
-import HoldItem from './HoldItem'
+import PhaseItem from './PhaseItem'
 import Toolbar from 'material-ui/Toolbar'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -20,20 +20,15 @@ const styles = theme => ({
 
 const SortableItem = SortableElement(
   ({ value, isEditable, isActive, selectForEdit, remove }) => {
-    switch (value.type) {
-      case 'hold':
-        return (
-          <HoldItem
-            phase={value}
-            isEditable={isEditable}
-            isActive={isActive}
-            selectForEdit={selectForEdit}
-            remove={remove}
-          />
-        )
-      default:
-        return null
-    }
+    return (
+      <PhaseItem
+        phase={value}
+        isEditable={isEditable}
+        isActive={isActive}
+        selectForEdit={selectForEdit}
+        remove={remove}
+      />
+    )
   }
 )
 
@@ -138,6 +133,7 @@ class DraggablePhaseList extends Component {
               this.props.onAdd({
                 type: 'fade',
                 color: { r: 255, g: 0, b: 0 },
+                endColor: { r: 0, g: 255, b: 0 },
                 duration: 1,
               })
             }

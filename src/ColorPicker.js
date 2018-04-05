@@ -50,7 +50,9 @@ class ColorPicker extends Component {
     let hue = color.hsl().hue()
     let alpha = color.hsl().saturationl()
     return (
-      <Paper className={this.props.classes.ColorPicker}>
+      <Paper
+        className={this.props.classes.ColorPicker + ' ' + this.props.className}
+      >
         <Tabs
           className={this.props.classes.Tabs}
           value={this.state.mode}

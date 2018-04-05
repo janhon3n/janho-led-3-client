@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 import { withStyles } from 'material-ui/styles'
-import HoldEdit from './HoldEdit'
+import PhaseEdit from './PhaseEdit'
 import DraggablePhaseList from './DraggablePhaseList'
 
 const styles = theme => ({
@@ -62,10 +62,9 @@ class Program extends Component {
           editableIndex={this.state.editablePhaseIndex}
           phaseIndex={this.props.phaseIndex}
         />
-        {editablePhase !== null &&
-          editablePhase.type === 'hold' && (
-            <HoldEdit phase={editablePhase} onEdit={this.editPhase} />
-          )}
+        {editablePhase !== null && (
+          <PhaseEdit phase={editablePhase} onEdit={this.editPhase} />
+        )}
       </Paper>
     )
   }

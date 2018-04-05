@@ -17,10 +17,8 @@ const styles = theme => ({
   },
   TempoControl: {
     display: 'flex',
-    flexDirection: 'column',
-  },
-  ValueControl: {
-    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   TextField: {
     marginLeft: '15px',
@@ -59,30 +57,33 @@ class TempoControl extends Component {
 
   render() {
     return (
-      <div className={this.props.classes.Container}>
+      <div className={this.props.classes.TempoControl}>
         <Typography className={this.props.classes.Ticker} variant="display1">
           {this.props.ticker + 1}
         </Typography>
-        <div className={this.props.classes.TempoControl}>
-          <Typography>Main tempo</Typography>
-          <div className={this.props.classes.ValueControl}>
-            <Slider
-              width={200}
-              value={this.props.tempo}
-              max={400}
-              onChange={this.setTempo}
-              background="rgba(0,0,0,0.1)"
-            />
-            <TextField
-              className={this.props.classes.TextField}
-              value={Math.round(this.props.tempo)}
-              onChange={e => this.setTempo(e.target.value)}
-            />
-            <Button variant="raised" color="secondary" onClick={this.tapClick}>
-              Tap
-            </Button>
-          </div>
-        </div>
+        <TextField
+          label="Main tempo (bpm)"
+          className={this.props.classes.TextField}
+          value={Math.round(this.props.tempo)}
+          onChange={e => this.setTempo(e.target.value)}
+        />
+        <Slider
+          width={200}
+          value={this.props.tempo}
+          max={400}
+          onChange={this.setTempo}
+          background="rgba(0,0,0,0.1)"
+        />
+        <Button
+          style={{
+            margin: '10px',
+          }}
+          variant="raised"
+          color="secondary"
+          onClick={this.tapClick}
+        >
+          Tap
+        </Button>
       </div>
     )
   }
